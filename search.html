@@ -1,0 +1,41 @@
+<!-- liateam-title-reader.html -->
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>خواندن عنوان محصول</title>
+</head>
+<body>
+  <h2>در حال واکشی عنوان محصول...</h2>
+  <pre id="result"></pre>
+
+  <script>
+    const url = "https://liateam.ir/products/399";
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const titleElement = doc.querySelector(".product__title");
+        const result = document.getElementById("result");
+
+        if (titleElement) {
+          result.textContent = "عنوان محصول:\n" + titleElement.innerText.trim();
+        } else {
+          result.textContent = "عنوان پیدا نشد.";
+        }
+      })
+      .catch(error => {
+        document.getElementById("result").textContent =
+          "خطا در واکشی صفحه:\n" + error.message;
+      });
+  </script>
+</body>
+</html>
