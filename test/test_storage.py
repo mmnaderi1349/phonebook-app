@@ -4,15 +4,15 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILENAME = os.path.join(BASE_DIR, "fortest.json")
 
-def save(list):
+def save(fehrest):
    with open(FILENAME, 'w') as f:
-      json.dump(list, f) 
+      json.dump(fehrest, f) 
 
 def load():
-   global list
+   global fehrest
    try:
       with open(FILENAME, 'r') as f:
-         list = json.load(f)
+         return json.load(f)
 
    except FileNotFoundError:
       return []        

@@ -1,14 +1,14 @@
 import json
 import os
 
-list = [ ]
+fehrest = [ ]
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILENAME = os.path.join(BASE_DIR, "fortest.json")
 
 def save():
    with open(FILENAME, 'w') as f:
-      json.dump(list, f) 
+      json.dump(fehrest, f) 
 
 
 def add_name():
@@ -18,17 +18,17 @@ def add_name():
      "name": name,
      "lname": lname
    }
-  list.append(names)
+  fehrest.append(names)
   save()
   print("The new name added successfully") 
 
 def show_name():
-   if not list:
+   if not fehrest:
       print("There isn't any name!")
       return
    print()
-   print("----------------- LIST -------------------")
-   for idx,c in enumerate(list, start=1):
+   print("----------------- fehrest -------------------")
+   for idx,c in enumerate(fehrest, start=1):
        print(f"{idx}. {c['name']} - {c['lname']}")
    print("------------------------------------------")  
    print()  
@@ -36,13 +36,13 @@ def show_name():
 
 def delete():
    show_name()
-   if not list:
+   if not fehrest:
       print("There isn't any name!")
       return
    try:
       idx = int(input("Input the number for delete: "))
-      if 1 <= idx <= (len(list)):
-         deleted = list.pop(idx-1)
+      if 1 <= idx <= (len(fehrest)):
+         deleted = fehrest.pop(idx-1)
          print(f"(({deleted['name']})) deleted")
       else:
           print("Input valid number!")  
@@ -50,22 +50,22 @@ def delete():
       print("Error")        
       
 def load():
-   global list
+   global fehrest
    try:
       with open(FILENAME, 'r') as f:
-         list = json.load(f)
+         fehrest = json.load(f)
 
    except FileNotFoundError:
-      list = []  
+      fehrest = []  
 
 def edit():
-   if not list:
+   if not fehrest:
       return
    try:
       show_name()
       idx = int(input("Which the number do you want to edit: "))
-      if 1 <= idx <= len(list):
-         names = list[idx-1]
+      if 1 <= idx <= len(fehrest):
+         names = fehrest[idx-1]
          name = input(f"Name {names['name']}:") or names["name"]
          lname = input(f"Name {names['lname']}:") or names["lname"]
          names.update({

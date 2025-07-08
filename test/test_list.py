@@ -1,61 +1,62 @@
 from test_storage import save
 
-def add_name(list):
+def add_name(fehrest):
   name = input("name: ")
   lname = input("last name: ")
   names = {
      "name": name,
      "lname": lname
    }
-  list.append(names)
-  save(list)
+  fehrest.append(names)
+  save(fehrest)
   print("The new name added successfully") 
 
-  def show_name(list):
-   if not list:
-      print("There isn't any name!")
-      return
-   print()
-   print("----------------- LIST -------------------")
-   for idx,c in enumerate(list, start=1):
-       print(f"{idx}. {c['name']} - {c['lname']}")
-   print("------------------------------------------")  
-   print()  
+def show_name(fehrest):
+  if not fehrest:
+     print("There isn't any name!")
+     return
+  print()
+  print("----------------- fehrest -------------------")
+  for idx,c in enumerate(fehrest, start=1):  
+      print(f"{idx}. {c['name']} - {c['lname']}")
+  print("------------------------------------------")  
+  print()  
 
-def delete(list):
-   show_name(list)
-   if not list:
+def delete(fehrest):
+    show_name(fehrest)
+    if not fehrest:
       print("There isn't any name!")
       return
     try:
        idx = int(input("Input the number for delete: "))
-       if 1 <= idx <= (len(list)):
-          deleted = list.pop(idx-1)
+       if 1 <= idx <= (len(fehrest)):
+          deleted = fehrest.pop(idx-1)
+          save(fehrest)
           print(f"(({deleted['name']})) deleted")
        else:
             print("Input valid number!")  
-    except ValueError:fdg
-       print("Error")        
+    except ValueError:
+          print("Error")        
 
-def edit(list):
-    show_name(list)
-    if not list:
-      return
+def edit(fehrest):
+    show_name(fehrest)
+    if not fehrest:
+       return
     try:
       idx = int(input("Which the number do you want to edit: "))
-      if 1 <= idx <= len(list):
-         names = list[idx-1]
+      if 1 <= idx <= len(fehrest):
+         names = fehrest[idx-1]
          name = input(f"Name {names['name']}:") or names["name"]
          lname = input(f"Name {names['lname']}:") or names["lname"]
          names.update({
          "name": name,
          "lname": lname
          })
-         save(list)
+         save(fehrest)
          print(f"(({[name]} {[lname]})) edited")
       else:
          print("invalid number!!!")   
-   except ValueError:
+    except ValueError:
       print("Please input a valid number!")           
        
 
