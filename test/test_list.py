@@ -34,7 +34,7 @@ def delete(list):
           print(f"(({deleted['name']})) deleted")
        else:
             print("Input valid number!")  
-    except ValueError:
+    except ValueError:fdg
        print("Error")        
 
 def edit(list):
