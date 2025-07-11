@@ -1,13 +1,6 @@
-#film 
-import json
-import os
+from film_storage import save_film
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FILENAME = os.path.join(BASE_DIR, "film_lib.json")
-
-films = [ ]
-
-def add_film() :
+def add_film(films) :
     print("\n------film-list-------")
     name = input("Film name: ")
     Genr = input("Genr: ")
@@ -22,23 +15,11 @@ def add_film() :
      }    
     films.append(film)
     print("The film added successfully!")
-    save_film()
+    save_film(films)
 
-def save_film():
-   with open(FILENAME, 'w') as f:
-     json.dump(films,f)
-
-def load_film():
-   global films
-   try:
-      with open(FILENAME, 'r') as f:
-         films = json.load(f)
-   except FileNotFoundError:
-      return[]        
-       
-def edit_film():     
+def edit_film(films):     
   try:
-      show_film()
+      show_film(films)
       m = int(input("Which the number you want to edit: "))
       if 1 <= m <= (len(films)):
         film = films[m - 1]
@@ -53,7 +34,7 @@ def edit_film():
           "year": new_year,
           "imdb": new_imdb
         }) 
-        save_film()
+        save_film(films)
       else:
         print("Please input a valid number!")  
 
@@ -61,7 +42,7 @@ def edit_film():
     print("Please input a value number")          
         
 
-def show_film() :
+def show_film(films) :
    print("\n------ Films List --------")
    if not films:
       print("Not any film!")
@@ -70,44 +51,16 @@ def show_film() :
      print(f"{idx} . {c['name']} - Genr: {c['Genr']} - {c['year']} - imdb rank: {c['imdb']}")
    print("--------------------------\n")     
 
-def del_film():
+def del_film(films):
    if not films:
       print("There isn't any film!")
       return
-   show_film()
+   show_film(films)
    n = int(input("Inter film's number that you want to delete: "))
    try:
       if 1 <= n <= (len(films)):
          deleted = films.pop(n-1)
-         save_film()
+         save_film(films)
          print(f"{deleted['name']} deleted")
    except ValueError:
-      print("Input a valid data")   
-
-def main_menu() :
-    while True:
-        print("Main Menu")
-        print("1. add ")
-        print("2. show")
-        print("3. delete")
-        print("4. edit")
-        print("5. exit")        
-        
-        choice = input("Your selection: ")
-        if choice == "1":
-          add_film()
-        elif choice == "2":
-          show_film()
-        elif choice == "3":
-          del_film()  
-        elif choice == "4":
-          edit_film()                   
-        elif choice == "5":
-          print("Exit")
-          break
-        else:
-           print("Bad selection!")  
-
-# Run!
-load_film()
-main_menu()           
+      print("Input a valid data")       
